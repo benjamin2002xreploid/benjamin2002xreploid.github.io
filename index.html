@@ -1,375 +1,219 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sopas de Casa</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sopas de Casa</title>
 
-  <style>
-    :root{
-      --bg:#0b1220;
-      --card:#101a33;
-      --text:#eaf0ff;
-      --muted:#a8b3d6;
-      --accent:#7dd3fc;
-      --border:rgba(255,255,255,.08);
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background:
-        radial-gradient(1200px 600px at 10% 10%, rgba(125,211,252,.25), transparent 60%),
-        radial-gradient(900px 500px at 90% 0%, rgba(167,139,250,.22), transparent 55%),
-        var(--bg);
-      color:var(--text);
-    }
+<style>
+:root{
+  --bg:#0b1220;
+  --text:#eaf0ff;
+  --muted:#a8b3d6;
+  --accent:#7dd3fc;
+  --border:rgba(255,255,255,.08);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family: system-ui, Arial, sans-serif;
+  background: radial-gradient(1000px 500px at 10% 10%, rgba(125,211,252,.25), transparent 60%), var(--bg);
+  color:var(--text);
+}
 
-    header{
-      padding:28px 18px 18px;
-      max-width:1100px;
-      margin:0 auto;
-    }
-    .title{
-      display:flex; align-items:center; gap:12px;
-      font-size:34px; font-weight:800; letter-spacing:.2px;
-      margin:0 0 6px 0;
-    }
-    .subtitle{margin:0; color:var(--muted)}
+header{
+  max-width:1100px;
+  margin:auto;
+  padding:24px;
+}
+h1{margin:0}
+.subtitle{color:var(--muted)}
 
-    .wrap{
-      max-width:1100px;
-      margin:0 auto;
-      padding:18px;
-      display:grid;
-      grid-template-columns: 1.65fr .95fr;
-      gap:16px;
-    }
+.wrap{
+  max-width:1100px;
+  margin:auto;
+  padding:18px;
+  display:grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap:16px;
+}
 
-    .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      border:1px solid var(--border);
-      border-radius:16px;
-      overflow:hidden;
-      box-shadow: 0 10px 30px rgba(0,0,0,.25);
-    }
+.card{
+  background: rgba(255,255,255,.05);
+  border:1px solid var(--border);
+  border-radius:16px;
+  overflow:hidden;
+}
 
-    /* Receta principal */
-    .hero img{
-      width:100%;
-      height:260px;
-      object-fit:cover;
-      display:block;
-      border-bottom:1px solid var(--border);
-    }
-    .content{ padding:16px; }
-    h2{ margin:0 0 8px 0; font-size:24px }
-    .meta{ color:var(--muted); margin:0 0 14px 0; font-size:14px }
+.hero img{
+  width:100%;
+  height:260px;
+  object-fit:cover;
+}
 
-    .grid2{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:14px;
-    }
-    .box{
-      background: rgba(0,0,0,.18);
-      border:1px solid var(--border);
-      border-radius:14px;
-      padding:12px;
-    }
-    .box h3{
-      margin:0 0 10px 0;
-      font-size:16px;
-      color:var(--accent);
-    }
-    ul,ol{ margin:0; padding-left:18px; color:var(--text) }
-    li{ margin:6px 0; color:rgba(234,240,255,.95) }
+.content{padding:16px}
+.grid2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
 
-    /* Sidebar */
-    .sidebar .content{ padding:14px; }
-    .search{
-      width:100%;
-      padding:10px 12px;
-      border-radius:12px;
-      border:1px solid var(--border);
-      background: rgba(0,0,0,.22);
-      color: var(--text);
-      outline:none;
-      margin-bottom:12px;
-    }
-    .list{ display:flex; flex-direction:column; gap:10px; }
-    .item{
-      display:flex; gap:10px; align-items:center;
-      padding:10px;
-      border-radius:14px;
-      border:1px solid var(--border);
-      background: rgba(0,0,0,.18);
-      cursor:pointer;
-      transition: transform .08s ease, border-color .2s ease;
-    }
-    .item:hover{
-      transform: translateY(-1px);
-      border-color: rgba(125,211,252,.35);
-    }
-    .item.active{
-      border-color: rgba(125,211,252,.6);
-      box-shadow: 0 0 0 2px rgba(125,211,252,.15) inset;
-    }
-    .thumb{
-      width:58px; height:44px; border-radius:10px;
-      object-fit:cover; border:1px solid var(--border);
-      flex:0 0 auto;
-    }
-    .item b{ display:block; font-size:14px }
-    .item span{ display:block; font-size:12px; color:var(--muted); margin-top:2px }
+.box{
+  background: rgba(0,0,0,.2);
+  padding:12px;
+  border-radius:12px;
+  border:1px solid var(--border);
+}
+.box h3{color:var(--accent); margin-top:0}
 
-    /* Cuadro grande de enlace (Más recetas) */
-    .cuadro-enlace{
-      margin-top: 22px;
-      padding: 18px;
-      border-radius: 18px;
-      background: linear-gradient(
-        135deg,
-        rgba(255, 105, 180, 0.18),
-        rgba(255, 165, 0, 0.18)
-      );
-      border: 1px solid rgba(255,255,255,0.20);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-    }
-    .cuadro-texto h3{
-      margin: 0 0 6px 0;
-      font-size: 20px;
-    }
-    .cuadro-texto p{
-      margin: 0;
-      opacity: 0.9;
-      font-size: 14px;
-      color: rgba(234,240,255,.92);
-    }
-    .btn-enlace{
-      padding: 14px 20px;
-      border-radius: 14px;
-      background: rgba(0,0,0,0.35);
-      color: white;
-      text-decoration: none;
-      font-weight: 800;
-      white-space: nowrap;
-      transition: transform 0.15s ease, background 0.15s ease;
-      border: 1px solid rgba(255,255,255,0.12);
-    }
-    .btn-enlace:hover{
-      transform: scale(1.05);
-      background: rgba(0,0,0,0.55);
-    }
+.sidebar .item{
+  display:flex;
+  gap:10px;
+  padding:10px;
+  border-radius:12px;
+  cursor:pointer;
+  border:1px solid var(--border);
+  margin-bottom:10px;
+}
+.sidebar .item:hover{background:rgba(255,255,255,.06)}
+.thumb{
+  width:55px;
+  height:45px;
+  object-fit:cover;
+  border-radius:8px;
+}
 
-    footer{
-      max-width:1100px; margin:0 auto; padding:6px 18px 24px;
-      color:rgba(168,179,214,.85); font-size:12px;
-      text-align:center;
-    }
+/* CUADRO GRANDE DE ENLACE */
+.cuadro-enlace{
+  margin-top:20px;
+  padding:18px;
+  border-radius:16px;
+  background: linear-gradient(135deg, rgba(255,105,180,.25), rgba(255,165,0,.25));
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+}
+.btn-enlace{
+  padding:14px 18px;
+  border-radius:12px;
+  background: rgba(0,0,0,.4);
+  color:white;
+  text-decoration:none;
+  font-weight:800;
+}
+.btn-enlace:hover{transform:scale(1.05)}
 
-    @media (max-width: 900px){
-      .wrap{ grid-template-columns: 1fr; }
-      .hero img{ height:220px; }
-      .grid2{ grid-template-columns: 1fr; }
-      .cuadro-enlace{ flex-direction: column; align-items: stretch; }
-      .btn-enlace{ text-align:center; }
-    }
-  </style>
+@media(max-width:900px){
+  .wrap{grid-template-columns:1fr}
+  .grid2{grid-template-columns:1fr}
+}
+</style>
 </head>
 
 <body>
-  <header>
-    <h1 class="title">🍲 Sopas de Casa</h1>
-    <p class="subtitle">Recetas fáciles, ricas y caseras. Elige una sopa del menú de la derecha.</p>
-  </header>
 
-  <main class="wrap">
-    <!-- IZQUIERDA: Receta -->
-    <section class="card hero" id="recipeCard">
-      <img id="recipeImg" src="images/caldo.jpg" alt="Sopa" />
-      <div class="content">
-        <h2 id="recipeTitle">Caldo de gallina</h2>
-        <p class="meta" id="recipeMeta">Ideal para el frío • Porción: 4 • Tiempo: 60 min</p>
+<header>
+  <h1>🍲 Sopas de Casa</h1>
+  <p class="subtitle">Elige una sopa y descubre su receta especial</p>
+</header>
 
-        <div class="grid2">
-          <div class="box">
-            <h3>Ingredientes</h3>
-            <ul id="recipeIngredients"></ul>
-          </div>
-          <div class="box">
-            <h3>Preparación</h3>
-            <ol id="recipeSteps"></ol>
-          </div>
-        </div>
+<main class="wrap">
 
-        <!-- ✅ CUADRO GRANDE CON ENLACE -->
-        <div class="cuadro-enlace">
-          <div class="cuadro-texto">
-            <h3>😜 Más recetas aquí</h3>
-            <p>Haz clic y descubre una receta especial que te va a encantar 😉</p>
-          </div>
+<section class="card hero">
+  <img id="img" src="images/caldo.jpg">
+  <div class="content">
+    <h2 id="titulo"></h2>
 
-          <a class="btn-enlace" href="https://lc.cx/Kj1uY7" target="_blank">
-            Ver receta especial →
-          </a>
-        </div>
+    <div class="grid2">
+      <div class="box">
+        <h3>Ingredientes</h3>
+        <ul id="ingredientes"></ul>
       </div>
-    </section>
-
-    <!-- DERECHA: Lista -->
-    <aside class="card sidebar">
-      <div class="content">
-        <input class="search" id="search" placeholder="Buscar sopa..." />
-        <div class="list" id="soupList"></div>
+      <div class="box">
+        <h3>Preparación</h3>
+        <ol id="pasos"></ol>
       </div>
-    </aside>
-  </main>
+    </div>
 
-  <footer>© 2026 – Recetas de Sopas</footer>
+    <!-- CUADRO DE ENLACE -->
+    <div class="cuadro-enlace">
+      <div>
+        <h3>😜 Más recetas aquí</h3>
+        <p>Haz clic para ver la receta especial 😉</p>
+      </div>
+      <a id="linkEspecial" class="btn-enlace" target="_blank">Ver receta →</a>
+    </div>
 
-  <script>
-    const RECETAS = [
-      {
-        id: "caldo",
-        nombre: "Caldo de gallina",
-        resumen: "Clásico, reconfortante",
-        img: "images/caldo.jpg",
-        meta: "Ideal para el frío • Porción: 4 • Tiempo: 60 min",
-        ingredientes: [
-          "1 pollo o gallina (presas)",
-          "1 cebolla",
-          "2 ramas de apio",
-          "2 zanahorias",
-          "2 papas",
-          "Fideos (opcional)",
-          "Sal, pimienta y ajo"
-        ],
-        pasos: [
-          "Hierve agua en una olla grande.",
-          "Agrega el pollo/gallina con ajo, sal y pimienta.",
-          "Añade cebolla, apio y zanahoria. Cocina 40–50 min.",
-          "Agrega papa (y fideos si deseas) y cocina 10–15 min.",
-          "Sirve caliente. Puedes añadir limón y hierbabuena."
-        ]
-      },
-      {
-        id: "lentejas",
-        nombre: "Sopa de lentejas",
-        resumen: "Económica y nutritiva",
-        img: "images/lentejas.jpg",
-        meta: "Súper nutritiva • Porción: 4 • Tiempo: 45 min",
-        ingredientes: [
-          "1 taza de lentejas",
-          "1 cebolla picada",
-          "1 zanahoria en cubos",
-          "1 papa (opcional)",
-          "Ajo, comino, sal",
-          "Agua o caldo"
-        ],
-        pasos: [
-          "Lava las lentejas.",
-          "Sofríe cebolla y ajo con comino.",
-          "Agrega lentejas y agua/caldo. Cocina 25–30 min.",
-          "Añade zanahoria y papa. Cocina 10–15 min.",
-          "Ajusta sal y sirve."
-        ]
-      },
-      {
-        id: "zapallo",
-        nombre: "Crema de zapallo",
-        resumen: "Suave y cremosa",
-        img: "images/zapallo.jpg",
-        meta: "Cremosa • Porción: 4 • Tiempo: 35 min",
-        ingredientes: [
-          "500 g de zapallo",
-          "1 cebolla",
-          "1 papa pequeña",
-          "Leche o crema (opcional)",
-          "Sal, pimienta",
-          "Agua o caldo"
-        ],
-        pasos: [
-          "Corta el zapallo y la papa en cubos.",
-          "Cocina con cebolla en agua/caldo hasta ablandar.",
-          "Licúa hasta obtener crema.",
-          "Regresa a la olla y ajusta sal/pimienta.",
-          "Opcional: agrega leche/crema y calienta 2–3 min."
-        ]
-      }
-    ];
+  </div>
+</section>
 
-    const $ = (id) => document.getElementById(id);
+<aside class="card sidebar content" id="lista"></aside>
 
-    function renderList(filter = "") {
-      const list = $("soupList");
-      list.innerHTML = "";
-      RECETAS
-        .filter(r => r.nombre.toLowerCase().includes(filter.toLowerCase()))
-        .forEach((r) => {
-          const div = document.createElement("div");
-          div.className = "item";
-          div.dataset.id = r.id;
-          div.innerHTML = `
-            <img class="thumb" src="${r.img}" alt="${r.nombre}">
-            <div>
-              <b>${r.nombre}</b>
-              <span>${r.resumen}</span>
-            </div>
-          `;
-          div.onclick = () => selectRecipe(r.id);
-          list.appendChild(div);
-        });
+</main>
 
-      // marcar activo el primero si existe
-      const first = document.querySelector(".item");
-      if (first && !$("search").value) first.classList.add("active");
-    }
+<script>
+const RECETAS = [
+{
+  nombre:"Caldo de gallina",
+  img:"images/caldo.jpg",
+  link:"https://lc.cx/Kj1uY7",
+  ingredientes:["Gallina","Papas","Fideos","Ajo","Sal"],
+  pasos:["Hervir la gallina","Agregar verduras","Servir caliente"]
+},
+{
+  nombre:"Sopa de lentejas",
+  img:"images/lentejas.jpg",
+  link:"https://lc.cx/3OpeS_",
+  ingredientes:["Lentejas","Cebolla","Ajo","Zanahoria"],
+  pasos:["Cocer lentejas","Hacer aderezo","Mezclar y servir"]
+},
+{
+  nombre:"Crema de zapallo",
+  img:"images/zapallo.jpg",
+  link:"https://lc.cx/iC-M36",
+  ingredientes:["Zapallo","Cebolla","Papa","Sal"],
+  pasos:["Hervir","Licuar","Servir caliente"]
+}
+];
 
-    function selectRecipe(id) {
-      const r = RECETAS.find(x => x.id === id);
-      if (!r) return;
+const img=document.getElementById("img");
+const titulo=document.getElementById("titulo");
+const ingredientes=document.getElementById("ingredientes");
+const pasos=document.getElementById("pasos");
+const linkEspecial=document.getElementById("linkEspecial");
+const lista=document.getElementById("lista");
 
-      $("recipeImg").src = r.img;
-      $("recipeImg").alt = r.nombre;
-      $("recipeTitle").textContent = r.nombre;
-      $("recipeMeta").textContent = r.meta;
+function mostrar(r){
+  img.src=r.img;
+  titulo.textContent=r.nombre;
+  linkEspecial.href=r.link;
 
-      const ing = $("recipeIngredients");
-      ing.innerHTML = "";
-      r.ingredientes.forEach(x => {
-        const li = document.createElement("li");
-        li.textContent = x;
-        ing.appendChild(li);
-      });
+  ingredientes.innerHTML="";
+  r.ingredientes.forEach(i=>{
+    const li=document.createElement("li");
+    li.textContent=i;
+    ingredientes.appendChild(li);
+  });
 
-      const steps = $("recipeSteps");
-      steps.innerHTML = "";
-      r.pasos.forEach(x => {
-        const li = document.createElement("li");
-        li.textContent = x;
-        steps.appendChild(li);
-      });
+  pasos.innerHTML="";
+  r.pasos.forEach(p=>{
+    const li=document.createElement("li");
+    li.textContent=p;
+    pasos.appendChild(li);
+  });
+}
 
-      document.querySelectorAll(".item").forEach(el => {
-        el.classList.toggle("active", el.dataset.id === id);
-      });
+RECETAS.forEach(r=>{
+  const div=document.createElement("div");
+  div.className="item";
+  div.innerHTML=`<img class="thumb" src="${r.img}"><b>${r.nombre}</b>`;
+  div.onclick=()=>mostrar(r);
+  lista.appendChild(div);
+});
 
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+mostrar(RECETAS[0]);
+</script>
 
-    // Init
-    renderList();
-    selectRecipe("caldo");
-
-    $("search").addEventListener("input", (e) => {
-      renderList(e.target.value);
-      const first = document.querySelector(".item");
-      if (first) selectRecipe(first.dataset.id);
-    });
-  </script>
 </body>
 </html>
